@@ -1,4 +1,5 @@
 var users;
+var modifyTimeouts = {};
 
 module.exports =
 {
@@ -85,7 +86,15 @@ function ladCommands(command, nick, account, sender,  api)
 
 function modifyPointCount(operation, nick, account, sender, amount, api)
 {
-	if (nick !== sender)
+	if (modifyTimeouts[sender] && modifyTimeouts[sender].indexOf(nick) !== -1)
+	{
+		api.randomMessage(operation+"CantModify",
+		{
+			"nick": nick,
+			"sender": sender
+		});
+	}
+	else if (nick !== sender)
 	{
 		if (users[account] === undefined)
 			users[account] = 0;
@@ -98,6 +107,17 @@ function modifyPointCount(operation, nick, account, sender, amount, api)
 			"sender": sender
 		});
 		writeUsers(api);
+
+		if (modifyTimeouts[sender] === undefined)
+			modifyTimeouts[sender] = [];
+
+		modifyTimeouts[sender].push(nick);
+		setTimeout(function()
+		{
+			var i = modifyTimeouts[sender].indexOf(nick);
+			if (i !== -1)
+				modifyTimeouts[sender].splice(i, 1);
+		}, 60*1000);
 	}
 	else
 	{
