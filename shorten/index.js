@@ -16,7 +16,7 @@ module.exports =
 			{
 				"method": "GET",
 				"host": "xeo.la",
-				"path": "/url/?url="+url
+				"path": "/url/?url="+url.split("#")[0]
 			},
 			function(res)
 			{
@@ -29,7 +29,7 @@ module.exports =
 
 				res.on("end", function()
 				{
-					api.say(str);
+					api.say(str.split(/\n/)[0]);
 				});
 			});
 		}
