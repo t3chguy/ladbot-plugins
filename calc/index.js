@@ -1,4 +1,4 @@
-var math = require("./mathjs");
+var math = require("./libs/mathjs");
 
 module.exports =
 {
