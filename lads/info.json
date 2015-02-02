@@ -1,6 +1,6 @@
 {
 	"methods":
 	{
-		"lads": "\\b(lads|ladders|ladies|hermaphrodites)\\b"
+		"lads": "^(lads|ladders|ladies|hermaphrodites)\\b"
 	}
 }

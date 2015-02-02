@@ -1,0 +1,8 @@
+{
+	"methods":
+	{
+		"start": "^argue\\s+.+\\s+(for|against)",
+		"argue": ".+",
+		"stop": "^argue\\s+.+\\s+stop"
+	}
+}
