@@ -1,6 +1,14 @@
 var args = {};
-var forReg = /(yes|true|truth)/;
-var againstReg = /(no|false|lies)/;
+var forReg = /(yes|true|truth)/i;
+var againstReg = /(no|false|lies)/i;
+
+function send(api, stance)
+{
+	setTimeout(function()
+	{
+		api.randomMessage(stance);
+	}, 1000*2);
+}
 
 module.exports =
 {
@@ -27,9 +35,9 @@ module.exports =
 		"argue": function(msg, sender, api)
 		{
 			if (args[sender] === "for" && msg.match(againstReg))
-				api.randomMessage("for");
+				send(api, "for");
 			else if (args[sender] === "against" && msg.match(forReg))
-				api.randomMessage("against");
+				send(api, "against");
 		},
 
 		"stop": function(msg, sender, api)

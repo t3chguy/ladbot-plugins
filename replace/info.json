@@ -1,7 +1,0 @@
-{
-    "methods":
-    {
-        "register": ".+",
-        "replace": "^s/.+/.+(/g)?$"
-    }
-}
