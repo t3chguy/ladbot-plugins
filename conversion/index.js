@@ -56,35 +56,22 @@ module.exports =
 					amount = parseFloat(token);
 			});
 
-			http.request(
-			{
-				"host": "www.freecurrencyconverterapi.com",
-				"path": "/api/convert?q="+fromCurrency+"-"+toCurrency+"&compact=y"
-			},
-			function(response)
-			{
-				var str = "";
-				response.on("data", function(data)
-				{
-					if (data)
-						str += data;
-				});
+			var host = "http://www.freecurrencyconverterapi.com";
+			var path = "/api/convert?q="+fromCurrency+"-"+toCurrency+"&compact=y";
 
-				response.on("end", function()
+			api.request(host+path, function(err, res, body)
+			{
+				if (err) throw err;
+
+				var result = amount*JSON.parse(body)[fromCurrency+"-"+toCurrency].val;
+				api.randomMessage("currencyConvert",
 				{
-					var result = amount*JSON.parse(str)[fromCurrency+"-"+toCurrency].val;
-					if (true)
-					{
-						api.randomMessage("currencyConvert",
-						{
-							"from": fromCurrency,
-							"to": toCurrency,
-							"input": amount,
-							"result": parseFloat(result).toFixed(2)
-						});
-					}
+					"from": fromCurrency,
+					"to": toCurrency,
+					"input": amount,
+					"result": parseFloat(result).toFixed(2)
 				});
-			}).end();
+			});
 		}
 	}
 }

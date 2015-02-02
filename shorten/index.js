@@ -12,25 +12,11 @@ module.exports =
 			if (url.length < 25)
 				return;
 
-			http.get(
+			api.request("http://xeo.la/url/?url="+url.split("#")[0], function(err, res, body)
 			{
-				"method": "GET",
-				"host": "xeo.la",
-				"path": "/url/?url="+url.split("#")[0]
-			},
-			function(res)
-			{
-				var str = "";
+				if (err) throw err;
 
-				res.on("data", function(data)
-				{
-					str += data;
-				});
-
-				res.on("end", function()
-				{
-					api.say(str.split(/\n/)[0]);
-				});
+				api.say(body.split(/\n/)[0]);
 			});
 		}
 	}
