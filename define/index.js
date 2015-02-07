@@ -7,19 +7,16 @@ module.exports =
 			var word = msg.match(/\".+\"/)[0];
 			word = word.substring(1, word.length-1);
 
-			var base = "http://thesaurus.altervista.org/thesaurus/v1";
-			var options = "?output=json&language=en_US&key=7wgHKQcnJlRt2GQfcE5T&word="+encodeURIComponent(word);
+			var base = "http://api.wordnik.com:80/v4/word.json/"+encodeURIComponent(word)+"/definitions";
+			var options = "?limit=1&includeRelated=false&sourceDictionaries=all&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5";
 
 			api.request(base+options, function(err, res, body)
 			{
-				var defs = JSON.parse(body).response;
+				var def = JSON.parse(body);
 
-				if (defs)
+				if (def.length > 0)
 				{
-					defs.forEach(function(def, i)
-					{
-						api.say(def.list.category+" "+def.list.synonyms.replace(/\|/g, ", ").replace(/\-/g, " "));
-					});
+					api.say(def[0].text);
 				}
 				else
 				{
