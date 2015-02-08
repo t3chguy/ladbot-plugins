@@ -7,7 +7,7 @@ module.exports =
 			var query = msg.match(/\".+\"/)[0];
 			query = query.substring(1, query.length-1);
 
-			var base = "http://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&rawcontinue&titles="+encodeURIComponent(query)+"&exsentences=";
+			var base = "http://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&rawcontinue&redirects&titles="+encodeURIComponent(query)+"&exsentences=";
 
 			api.request(base+1, function(err, res, body)
 			{
