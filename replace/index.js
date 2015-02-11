@@ -6,7 +6,7 @@ module.exports =
 	{
 		"register": function(msg, sender, api)
 		{
-			if (!msg.match(/s\/.+\/.+/))
+			if (!msg.match(/^s\/.+\/.+$/))
 				lastMessages[sender] = msg;
 		},
 
@@ -16,7 +16,7 @@ module.exports =
 			var regex = new RegExp(parts[1], parts[3]);
 			var sub = parts[2];
 			var result = lastMessages[sender].replace(regex, sub);
-			api.say(sender+": "+result);
+			api.say("* "+result+" - "+sender);
 		}
 	}
 }

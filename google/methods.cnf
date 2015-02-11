@@ -1,1 +1,1 @@
-google = google\s+".+"
+google = ^google\s+".+"
