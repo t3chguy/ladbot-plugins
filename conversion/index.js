@@ -1,13 +1,5 @@
 var http = require("http");
 
-var charMap = ["0", "1", "2", "3", "4", "5",
-               "6", "7", "8", "9", "A", "B",
-               "C", "D", "E", "F", "G", "H",
-               "I", "J", "K", "L", "M", "N",
-               "O", "P", "Q", "R", "S", "T",
-               "U", "V", "W", "X", "Y", "Z"];
-
-
 module.exports =
 {
 	"methods":
@@ -91,14 +83,13 @@ function parseBase(str)
 	{
 		var token = tokens[i];
 
-		if (token.match(/^\d+$/))
+		if (token.match(/^\d+$/) && nextBase == "from")
 		{
-			if (nextBase == "from")
-				fromBase = +token;
-			else if (nextBase == "to")
-				toBase = +token;
-			else
-				num = +token;
+			fromBase = +token;
+		}
+		else if (token.match(/^\d+$/) && nextBase == "to")
+		{
+			toBase = +token;
 		}
 		else if (token.match(/^from$/i))
 		{
@@ -114,6 +105,10 @@ function parseBase(str)
 				nextBase = "from";
 			else if (next == "to")
 				nextBase = "to";
+		}
+		else
+		{
+			num = token;
 		}
 	}
 
@@ -133,22 +128,8 @@ function toBase(fromBase, toBase, num)
 
 	if (toBase > 36 || toBase < 2)
 		throw new Error("Base out of bounds");
+	else if (isNaN(num))
+		throw new Error("Not a Number");
 
-	var i;
-	var reverseCharCodes = [];
-
-	do
-	{
-		reverseCharCodes.push(num % toBase);
-		num = Math.floor(num/toBase);
-	}
-	while (num > 0);
-
-	var digitString = "";
-	for (i in reverseCharCodes)
-	{
-		digitString = charMap[reverseCharCodes[i]]+digitString;
-	}
-
-	return digitString; 
+	return num.toString(toBase).toUpperCase();
 }
