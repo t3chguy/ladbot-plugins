@@ -1,12 +1,12 @@
 var conf;
 
-module.exports = 
+module.exports =
 {
 	"methods":
 	{
-		"lads": function(msg, sender, api)
+		"lads": function(msg, sender, api, chan)
 		{
-			var names = api.getNames();
+			var names = api.getNames(chan);
 			var str = "";
 
 			var i;
