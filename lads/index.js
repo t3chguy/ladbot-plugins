@@ -7,13 +7,12 @@ module.exports =
 		"lads": function(msg, sender, api, chan)
 		{
 			if (typeof chan === 'undefined') {
-				api.say("This is a Private Conversation. No Pervs Here.");
+				api.randomMessage("private");
 			} else {
-				var names = api.getNames(chan);
 				var str = "";
 
 				var i;
-				for (i in names)
+				for (i in api.getNames(chan))
 				{
 					if (i !== api.conf.nick && i !== sender)
 						str += i+" ";
