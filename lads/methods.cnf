@@ -1,1 +1,1 @@
-lads = ^(lads|ladders|ladies|hermaphrodites)\b
+lads = ^(lads|ladders|ladies|hermaphrodites|guys|list|ping)\b
