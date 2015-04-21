@@ -1,22 +1,28 @@
 var conf;
 
-module.exports = 
+module.exports =
 {
 	"methods":
 	{
-		"lads": function(msg, sender, api)
+		"lads": function(msg, sender, api, chan)
 		{
-			var names = api.getNames();
-			var str = "";
-
-			var i;
-			for (i in names)
+			if (typeof chan === 'undefined')
 			{
-				if (i !== api.conf.nick && i !== sender)
-					str += i+" ";
+				api.randomMessage("private");
 			}
+			else
+			{
+				var str = "";
 
-			api.say(str);
+				var i;
+				for (i in api.getNames(chan))
+				{
+					if (i !== api.conf.nick && i !== sender)
+						str += i+" ";
+				}
+
+				api.say(str);
+			}
 		}
 	}
 }
