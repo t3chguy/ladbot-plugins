@@ -6,9 +6,12 @@ module.exports =
 	{
 		"lads": function(msg, sender, api, chan)
 		{
-			if (typeof chan === 'undefined') {
+			if (typeof chan === 'undefined')
+			{
 				api.randomMessage("private");
-			} else {
+			}
+			else
+			{
 				var str = "";
 
 				var i;
