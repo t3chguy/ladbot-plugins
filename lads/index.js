@@ -6,7 +6,7 @@ module.exports =
 	{
 		"lads": function(msg, sender, api, chan)
 		{
-			if (chan === 0) {
+			if (typeof chan === 'undefined') {
 				api.say("This is a Private Conversation. No Pervs Here.");
 			} else {
 				var names = api.getNames(chan);
