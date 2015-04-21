@@ -4,9 +4,9 @@ module.exports =
 {
 	"methods":
 	{
-		"lads": function(msg, sender, api, chan)
+		"lads": function(msg, sender, api)
 		{
-			if (typeof chan === 'undefined')
+			if (("&#").indexOf(api.dest.substr(0,1)) === -1)
 			{
 				api.randomMessage("private");
 			}
@@ -15,7 +15,7 @@ module.exports =
 				var str = "";
 
 				var i;
-				for (i in api.getNames(chan))
+				for (i in api.getNames())
 				{
 					if (i !== api.conf.nick && i !== sender)
 						str += i+" ";
