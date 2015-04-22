@@ -36,6 +36,6 @@ module.exports =
 				}
 			}
 			response.end();
-		}).listen(8080);
+		}).listen(api.conf.httpport);
 	}
 }
