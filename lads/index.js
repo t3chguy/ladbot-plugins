@@ -17,7 +17,7 @@ module.exports =
 				var i;
 				for (i in api.getNames())
 				{
-					if (i !== api.conf.nick && i !== sender)
+					if (i !== api.irc._client.nick && i !== sender)
 						str += i+" ";
 				}
 

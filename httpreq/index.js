@@ -1,3 +1,4 @@
+fs = require("fs");
 module.exports =
 {
 	"init": function(api)
@@ -37,5 +38,49 @@ module.exports =
 			}
 			response.end();
 		}).listen(api.conf.httpport);
+		console.log("About to define Logger");
+//console.log("Export:", api.irc._client.on.toString() == api.on.toString());
+		var i, chan, fso = {};
+		for (i in api.conf.options.channels)
+		{
+			chan = api.conf.options.channels[i];
+			fso[chan] = fs.createWriteStream(chan + ".log", { flags: "a" });
+		};
+		api.irc._client.on('message#', function(from, to, msg)
+		{
+			logger(fso[to], " <" + from + "> " + msg);
+		});
+		api.irc._client.on('selfMessage', function(to, msg)
+		{
+			setTimeout(function()
+			{
+				logger(fso[to], " <" + this.nick + "> " + msg);
+			}.bind(this), 1);
+		});
+		api.irc._client.on('topic', function(to, topic, nick)
+		{
+			logger(fso[to], " Topic: " + topic + " set by " + nick);
+		});
+		api.irc._client.on('join', function(to, nick)
+		{
+			logger(fso[to], nick + " has Joined " + to);
+		});
+		api.irc._client.on('part', function(to, nick, reason)
+		{
+			logger(fso[to], nick + " has Parted " + to + " (" + (reason || "Unspecified") + ")")
+		});
+		//api.irc._client.on('quit', function(nick, reason, channels)
+		//{
+		//	logger(fso[])
+		//});
+		api.irc._client.on('kick', function(to, nick, by, reason)
+		{
+			logger(fso[to], nick + " has been kicked by " + by + " for " + reason);
+		});
 	}
+}
+
+function logger(file, message)
+{
+	file.write(Date.now() + " " + message + "\n");
 }
